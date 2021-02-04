@@ -1,30 +1,46 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  
   <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+*{padding:0;margin:0;color:#333;-webkit-text-size-adjust: none;}
+li {list-style:none;}
+img {border:none;vertical-align:bottom}
+a{text-decoration:none;}
+h1,h2,h3,h4,h5{font-weight: 400;}
+.tac{
+	text-align: center;
+}
+.clear {
+	zoom: 1;
+}
+.ui-fl{
+	float: left;
+}
+.ui-fr{
+	float: right;
+}
+.clear:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+.f_flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
 }
 
-#nav {
-  padding: 30px;
+.z_flex {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.userColorBlock {
+    height: 20rpx;
+    background: #F8F9FB;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+/*每个页面公共css */
 </style>
