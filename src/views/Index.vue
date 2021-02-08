@@ -3,9 +3,9 @@
 		<div class="banner"><img src="../assets/banner1.png" alt="" width="100%"></div>
 		<div class="b_modular">
 			<div class="b_title"><span>被保险人性别</span></div>
-			<choice ctype="sex" code="insuredSex" :vals="insuredSex"  @changeVal="handlechange" ></choice>
+			<Choice ctype="sex" code="insuredSex" :vals="insuredSex"  @changeVal="handlechange" ></Choice>
 			<div class="b_title"><span>被保险人年龄</span></div>
-			<choice ctype="age" code="insuredAge"  :vals="insuredAge"  @changeVal="handlechange" ></choice>
+			<Choice ctype="age" code="insuredAge"  :vals="insuredAge"  @changeVal="handlechange" ></Choice>
 			<div class="choice_input_box">
 				<input type="checkbox" name="information" id="information_input"  v-model="informationFlag"/> 
 				<i></i>
@@ -13,22 +13,35 @@
 			</div>
 			<div class="information_box" v-if="informationFlag">
 				<div class="b_title"><span>投保险人性别</span></div>
-				<choice ctype="sex" code="attackSex" :vals="attackSex"  @changeVal="handlechange" ></choice>
+				<Choice ctype="sex" code="attackSex" :vals="attackSex"  @changeVal="handlechange" ></Choice>
 				<div class="b_title"><span>投保险人年龄</span></div>
-				<choice ctype="age" code="attackAge"  :vals="attackAge"  @changeVal="handlechange" ></choice>
+				<Choice ctype="age" code="attackAge"  :vals="attackAge"  @changeVal="handlechange" ></Choice>
 			</div>
 		</div>
-
+		<div class="b_modular overh cusMain">
+			<div class="b_title">
+				<span>险种选择</span><div class="paly_choice" ><input type="checkbox" v-model="productList" class="paly_choiceInput"/>选择产品</div>
+			</div>
+			<ProductData :plan="pdata" :iAge="insuredAge" :aAge="attackAge" :aAgeFlag="informationFlag"></ProductData>
+		</div>
+		<ProductList v-if="productList" :flag="productList" :iAge="insuredAge" :aAge="attackAge" :aAgeFlag="informationFlag"  code="productList" @changeFlag="handlechange" @saveProducts="saveProduct"></ProductList>
+		<div id="" @click="golandpage">
+			确定
+		</div>
 	</div>
 </template>
 
 <script>
 	// @ is an alias to /src
-import choice from '@/components/choice.vue'
+import Choice from '@/components/Choice.vue'
+import ProductList from '@/components/ProductList.vue'
+import ProductData from '@/components/ProductData.vue'
 	export default {
 		name: 'Index',
 		components: {
-    		choice,
+    		Choice,
+    		ProductList,
+    		ProductData
 		},
 		data() {
 			return {
@@ -37,12 +50,21 @@ import choice from '@/components/choice.vue'
 				attackSex:0,
 				attackAge:18,
 				informationFlag:false,
+				productList:false,
+				pdata:{},
 			}
 		},
 		methods:{
 			handlechange:function(data){
 				var code=data.code;
 				this[code]=data.val;
+			},
+			saveProduct:function(data){
+				this.pdata=data
+				console.log(this.pdata)
+			},
+			golandpage(){
+				this.$router.push({path:'Landpage',query:{id:'123'}});
 			}
 		}
 	}
@@ -130,4 +152,38 @@ import choice from '@/components/choice.vue'
 	background-size: 36px;
 	border: none;
 }
+.paly_choice{
+	width: 235px;
+	height: 62px;
+	box-sizing: border-box;
+	border: 2px solid #0082fe;
+	border-radius: 6px;
+	display: block;
+	float: right;
+	line-height: 58px;
+	color: #0282fd;
+	padding-left: 80px;
+	position: relative;
+	font-size: 28px;
+}
+.paly_choiceInput{
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+}
+.paly_choice:after{
+	content: "";
+	width: 34px;
+	height: 34px;
+	background: url(../assets/paly_choice_icon.png)no-repeat;
+	background-size:34px;
+	position: absolute;
+	left: 32px;
+	top: 12px;
+}
+
 </style>

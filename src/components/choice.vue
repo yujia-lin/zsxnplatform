@@ -155,9 +155,6 @@ export default {
     height: 30px;
     z-index: 10;
 }
-.processRange:focus{
-	outline: none;
-}
 .processRange::-webkit-slider-runnable-track {/*轨道*/
     height: 30px;
 }
@@ -171,8 +168,6 @@ export default {
     background-size: 51px;
     border: none;
     border-radius: 50%; 
- }
- .rangeAgeInput:focus{
- 	outline:none;
- }
+}
+
 </style>

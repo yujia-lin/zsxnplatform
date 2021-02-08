@@ -42,5 +42,11 @@ h1,h2,h3,h4,h5{font-weight: 400;}
     height: 20rpx;
     background: #F8F9FB;
 }
+select:focus{
+	outline: none;
+}
+input:focus{
+	outline: none;
+}
 /*每个页面公共css */
 </style>
