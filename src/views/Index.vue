@@ -22,18 +22,20 @@
 			<div class="b_title">
 				<span>险种选择</span><div class="paly_choice" ><input type="checkbox" v-model="productList" class="paly_choiceInput"/>选择产品</div>
 			</div>
-			<ProductData :plan="pdata" :iAge="insuredAge" :aAge="attackAge" :aAgeFlag="informationFlag"></ProductData>
+			<ProductData :plan="pdata" :iAge="insuredAge" :aAge="attackAge" :aAgeFlag="informationFlag" @saveProductData="saveProductData"></ProductData>
 		</div>
 		<ProductList v-if="productList" :flag="productList" :iAge="insuredAge" :aAge="attackAge" :aAgeFlag="informationFlag"  code="productList" @changeFlag="handlechange" @saveProducts="saveProduct"></ProductList>
-		<div id="" @click="golandpage">
-			确定
+		<div class="btn_box">
+			<div class="create_btn" @click="golandpage">生成计划书</div>
 		</div>
+		<showload v-if="showloadFlag" class="showload" :text="showloadText" :flag="showloadFlag" code="showloadFlag" @changeShow="handlechange"></showload>
 	</div>
 </template>
 
 <script>
 	// @ is an alias to /src
 import Choice from '@/components/Choice.vue'
+import showload from '@/components/showload.vue'
 import ProductList from '@/components/ProductList.vue'
 import ProductData from '@/components/ProductData.vue'
 	export default {
@@ -41,7 +43,8 @@ import ProductData from '@/components/ProductData.vue'
 		components: {
     		Choice,
     		ProductList,
-    		ProductData
+    		ProductData,
+    		showload
 		},
 		data() {
 			return {
@@ -52,19 +55,29 @@ import ProductData from '@/components/ProductData.vue'
 				informationFlag:false,
 				productList:false,
 				pdata:{},
+				showloadFlag:false,
+				showloadText:"",
+				resultData:{},
 			}
 		},
 		methods:{
-			handlechange:function(data){
+			handlechange(data){
 				var code=data.code;
 				this[code]=data.val;
 			},
-			saveProduct:function(data){
-				this.pdata=data
-				console.log(this.pdata)
+			saveProduct(data){
+				this.pdata=JSON.parse(JSON.stringify(data))
+			},
+			saveProductData(){
+				
 			},
 			golandpage(){
-				this.$router.push({path:'Landpage',query:{id:'123'}});
+				if(this.productList){
+					this.$router.push({path:'Landpage',query:{id:'123'}});
+				}else{
+					this.showloadText='请先选择产品';
+					this.showloadFlag=true;				
+				}
 			}
 		}
 	}
@@ -75,7 +88,21 @@ import ProductData from '@/components/ProductData.vue'
 	background: #fff;
 	border-radius: 10px;
 }
-	
+.create_btn{
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    background: -webkit-linear-gradient(bottom, #1e90ff, #0e72fe);
+    color: #fff;
+    border: none;
+    border-radius: 160px;
+    font-size: 32px;
+    text-align: center;
+}
+.btn_box{
+	margin: 20px 40px 0;
+    padding: 20px 0 0;
+}
 .banner img {
 	width: 100%;
 }

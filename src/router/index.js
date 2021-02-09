@@ -19,8 +19,8 @@ const router = createRouter({
 //	base: process.env.BASE_URL,
 //	routes
 //mode:"hash",
-history: createWebHistory(process.env.BASE_URL),
-routes
+	history: createWebHistory(process.env.BASE_URL),
+	routes
 })
 
 export default router
